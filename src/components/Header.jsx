@@ -10,8 +10,8 @@ const styles = {
     top: 0,
     zIndex: 100,
   },
-  topBar: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1rem 0" },
-  logo: { fontSize: "1.8rem", fontWeight: "700", letterSpacing: "1px", cursor: "pointer" },
+  topBar: { display: "flex", justifyContent: "space-between", alignItems: "center", padding: "1rem 0", gap: "0.5rem" },
+  logo: { fontSize: "1.8rem", fontWeight: "700", letterSpacing: "1px", cursor: "pointer", flex: "0 0 auto" },
   logoSpan: { color: "#f5a623" },
   nav: { display: "flex", gap: "1.5rem", alignItems: "center" },
   navLink: { color: "white", textDecoration: "none", fontSize: "0.95rem", fontWeight: "500", cursor: "pointer" },
@@ -19,15 +19,22 @@ const styles = {
   searchBar: { background: "rgba(255,255,255,0.1)", padding: "0.8rem 0", display: "flex", gap: "0.8rem", alignItems: "center", flexWrap: "wrap" },
   searchInput: { padding: "0.5rem 1rem", borderRadius: "20px", border: "none", fontSize: "0.9rem", outline: "none", minWidth: "180px" },
   searchBtn: { background: "#f5a623", color: "#003580", border: "none", padding: "0.5rem 1.5rem", borderRadius: "20px", fontWeight: "700", cursor: "pointer" },
-  hamburger: { display: "none", background: "none", border: "none", color: "white", fontSize: "1.5rem", cursor: "pointer" },
-  filterBtn: { display: "none", background: "#f5a623", color: "#003580", border: "none", padding: "0.5rem 1rem", borderRadius: "20px", fontWeight: "700", cursor: "pointer", fontSize: "0.9rem", gap: "0.5rem", alignItems: "center" },
+  hamburger: { display: "none", background: "none", border: "none", color: "white", fontSize: "1.5rem", cursor: "pointer", padding: "0.5rem", flex: "0 0 auto" },
+  filterBtn: { display: "none", background: "#f5a623", color: "#003580", border: "none", padding: "0.5rem 0.75rem", borderRadius: "20px", fontWeight: "700", cursor: "pointer", fontSize: "0.85rem", gap: "0.3rem", alignItems: "center", flex: "0 0 auto", whiteSpace: "nowrap" },
 };
 
 const mediaQueryStyle = `
   @media (max-width: 768px) {
+    .header {
+      padding: 0 1rem !important;
+    }
+    .header-topbar {
+      padding: 0.75rem 0 !important;
+    }
     .header-searchbar {
       flex-direction: column;
       gap: 0.5rem;
+      padding: 0.5rem 0 !important;
     }
     .search-input {
       min-width: 100% !important;
@@ -36,21 +43,30 @@ const mediaQueryStyle = `
   }
   
   @media (max-width: 600px) {
+    .header {
+      padding: 0 0.75rem !important;
+    }
+    .header-topbar {
+      gap: 0.3rem !important;
+      padding: 0.6rem 0 !important;
+    }
     .header-nav {
       display: none !important;
     }
     .header-hamburger {
-      display: block !important;
+      display: flex !important;
     }
     .header-filter-btn {
       display: flex !important;
     }
     .header-logo {
-      font-size: 1.4rem !important;
+      font-size: 1.3rem !important;
+      letter-spacing: 0.5px !important;
     }
     .header-searchbar {
       flex-direction: column;
       padding: 0.5rem 0 !important;
+      gap: 0.4rem !important;
     }
     .search-input {
       min-width: 100% !important;
@@ -58,8 +74,9 @@ const mediaQueryStyle = `
       padding: 0.4rem 0.8rem;
     }
     .search-btn {
-      font-size: 0.85rem;
-      padding: 0.4rem 1rem !important;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem !important;
+      width: 100%;
     }
   }
 `;
@@ -70,11 +87,11 @@ export default function Header({ showFiltersBtn = false, onFiltersClick = null, 
   const [checkOut, setCheckOut] = useState("");
 
   return (
-    <header style={styles.header}>
+    <header style={styles.header} className="header">
       <style>{mediaQueryStyle}</style>
-      <div style={styles.topBar}>
+      <div style={styles.topBar} className="header-topbar">
         <div style={styles.logo} className="header-logo">Dream<span style={styles.logoSpan}>Stay</span></div>
-        <nav style={{...styles.nav, className: "header-nav"}}>
+        <nav style={{...styles.nav}} className="header-nav">
           <span style={styles.navLink}>Home</span>
           <span style={styles.navLink}>Destinations</span>
           <span style={styles.navLink}>Deals</span>
@@ -87,7 +104,7 @@ export default function Header({ showFiltersBtn = false, onFiltersClick = null, 
             className="header-filter-btn"
             onClick={onFiltersClick}
           >
-            🎛️ {filtersOpen ? "Close" : "Filters"}
+            🎛️ {filtersOpen ? "✕" : "Filters"}
           </button>
         )}
         <button 
@@ -97,27 +114,30 @@ export default function Header({ showFiltersBtn = false, onFiltersClick = null, 
           ☰
         </button>
       </div>
-      <div style={{...styles.searchBar, className: "header-searchbar"}}>
+      <div style={{...styles.searchBar}} className="header-searchbar">
         <input 
-          style={{...styles.searchInput, className: "search-input"}} 
+          style={{...styles.searchInput}} 
+          className="search-input"
           type="text" 
           placeholder="🌍 Where are you going?" 
           value={destination} 
           onChange={(e) => setDestination(e.target.value)} 
         />
         <input 
-          style={{...styles.searchInput, className: "search-input"}} 
+          style={{...styles.searchInput}} 
+          className="search-input"
           type="date" 
           value={checkIn} 
           onChange={(e) => setCheckIn(e.target.value)} 
         />
         <input 
-          style={{...styles.searchInput, className: "search-input"}} 
+          style={{...styles.searchInput}} 
+          className="search-input"
           type="date" 
           value={checkOut} 
           onChange={(e) => setCheckOut(e.target.value)} 
         />
-        <button style={{...styles.searchBtn, className: "search-btn"}}>🔍 Search Hotels</button>
+        <button style={{...styles.searchBtn}} className="search-btn">🔍 Search Hotels</button>
       </div>
     </header>
   );
