@@ -96,6 +96,48 @@ const hotelSummary = {
   lineHeight: "1.7",
 };
 
+const mediaQueryStyle = `
+  @media (max-width: 600px) {
+    .booking-modal {
+      max-width: 100% !important;
+      max-height: 95vh !important;
+      border-radius: 12px 12px 0 0 !important;
+    }
+    .booking-modal-header {
+      padding: 1rem !important;
+    }
+    .booking-modal-header-title {
+      font-size: 1rem !important;
+    }
+    .booking-modal-header-subtitle {
+      font-size: 0.75rem !important;
+    }
+    .booking-modal-body {
+      padding: 1rem !important;
+      gap: 0.7rem !important;
+      max-height: 80vh !important;
+    }
+    .booking-modal-row {
+      grid-template-columns: 1fr !important;
+      gap: 0.5rem !important;
+    }
+    .booking-modal-input {
+      font-size: 16px !important;
+      padding: 0.5rem 0.8rem !important;
+    }
+    .booking-modal-label {
+      font-size: 0.75rem !important;
+    }
+    .booking-modal-summary {
+      padding: 0.7rem !important;
+      font-size: 0.8rem !important;
+    }
+    .booking-modal-close {
+      font-size: 1.3rem !important;
+    }
+  }
+`;
+
 export default function BookingModal({ hotel, onClose }) {
   const [form, setForm] = useState({
     user_name: "",
@@ -154,164 +196,175 @@ export default function BookingModal({ hotel, onClose }) {
   };
 
   return (
-    <div style={overlay} onClick={onClose}>
-      <div style={modal} onClick={(e) => e.stopPropagation()}>
+    <>
+      <style>{mediaQueryStyle}</style>
+      <div style={overlay} onClick={onClose}>
+        <div style={modal} className="booking-modal" onClick={(e) => e.stopPropagation()}>
 
-        {/* Header */}
-        <div style={header}>
-          <div>
-            <div style={{ fontWeight: "700", fontSize: "1.1rem" }}>Book Your Stay</div>
-            <div style={{ fontSize: "0.82rem", opacity: 0.85 }}>{hotel.name}</div>
-          </div>
-          <button
-            onClick={onClose}
-            style={{ background: "none", border: "none", color: "white", fontSize: "1.5rem", cursor: "pointer", lineHeight: 1 }}
-          >
-            ×
-          </button>
-        </div>
-
-        {/* Body */}
-        <div style={body}>
-
-          {/* Success State */}
-          {status === "success" ? (
-            <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
-              <div style={{ fontSize: "3rem" }}>🎉</div>
-              <h3 style={{ color: "#003580", margin: "0.8rem 0 0.4rem" }}>Booking Request Sent!</h3>
-              <p style={{ color: "#555", fontSize: "0.9rem" }}>
-                A confirmation has been sent to <strong>{form.user_email}</strong>.<br />
-                Our team will contact you shortly.
-              </p>
-              <button
-                onClick={onClose}
-                style={{ ...submitBtn(false), marginTop: "1.5rem", maxWidth: "200px", margin: "1.5rem auto 0" }}
-              >
-                Close
-              </button>
+          {/* Header */}
+          <div style={header} className="booking-modal-header">
+            <div>
+              <div style={{ fontWeight: "700", fontSize: "1.1rem" }} className="booking-modal-header-title">Book Your Stay</div>
+              <div style={{ fontSize: "0.82rem", opacity: 0.85 }} className="booking-modal-header-subtitle">{hotel.name}</div>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
+            <button
+              onClick={onClose}
+              className="booking-modal-close"
+              style={{ background: "none", border: "none", color: "white", fontSize: "1.5rem", cursor: "pointer", lineHeight: 1 }}
+            >
+              ×
+            </button>
+          </div>
 
-              {/* Hotel Summary */}
-              <div style={hotelSummary}>
-                <strong>📍 {hotel.name}</strong><br />
-                🌍 {hotel.location}<br />
-                💰 <strong style={{ color: "#008009" }}>₹{hotel.price} / night</strong>
-                &nbsp;&nbsp;⭐ {hotel.rating}/5 stars
-              </div>
+          {/* Body */}
+          <div style={body} className="booking-modal-body">
 
-              {/* Guest Info */}
-              <div>
-                <label style={labelStyle}>Full Name *</label>
-                <input
-                  style={inputStyle}
-                  type="text"
-                  name="user_name"
-                  placeholder="John Doe"
-                  value={form.user_name}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div style={rowStyle}>
-                <div>
-                  <label style={labelStyle}>Email *</label>
-                  <input
-                    style={inputStyle}
-                    type="email"
-                    name="user_email"
-                    placeholder="you@email.com"
-                    value={form.user_email}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Phone</label>
-                  <input
-                    style={inputStyle}
-                    type="tel"
-                    name="user_phone"
-                    placeholder="+1 234 567 890"
-                    value={form.user_phone}
-                    onChange={handleChange}
-                  />
-                </div>
-              </div>
-
-              {/* Dates */}
-              <div style={rowStyle}>
-                <div>
-                  <label style={labelStyle}>Check-in *</label>
-                  <input
-                    style={inputStyle}
-                    type="date"
-                    name="check_in"
-                    value={form.check_in}
-                    onChange={handleChange}
-                    min={getTodayDate()}
-                    required
-                  />
-                </div>
-                <div>
-                  <label style={labelStyle}>Check-out *</label>
-                  <input
-                    style={inputStyle}
-                    type="date"
-                    name="check_out"
-                    value={form.check_out}
-                    onChange={handleChange}
-                    min={getTodayDate()}
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Guests */}
-              <div>
-                <label style={labelStyle}>Number of Guests</label>
-                <select
-                  style={inputStyle}
-                  name="guests"
-                  value={form.guests}
-                  onChange={handleChange}
+            {/* Success State */}
+            {status === "success" ? (
+              <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
+                <div style={{ fontSize: "3rem" }}>🎉</div>
+                <h3 style={{ color: "#003580", margin: "0.8rem 0 0.4rem" }}>Booking Request Sent!</h3>
+                <p style={{ color: "#555", fontSize: "0.9rem" }}>
+                  A confirmation has been sent to <strong>{form.user_email}</strong>.<br />
+                  Our team will contact you shortly.
+                </p>
+                <button
+                  onClick={onClose}
+                  style={{ ...submitBtn(false), marginTop: "1.5rem", maxWidth: "200px", margin: "1.5rem auto 0" }}
                 >
-                  {[1, 2, 3, 4, 5, 6].map((n) => (
-                    <option key={n} value={n}>{n} Guest{n > 1 ? "s" : ""}</option>
-                  ))}
-                </select>
+                  Close
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.9rem" }}>
 
-              {/* Message */}
-              <div>
-                <label style={labelStyle}>Special Requests</label>
-                <textarea
-                  style={{ ...inputStyle, resize: "vertical", minHeight: "70px" }}
-                  name="message"
-                  placeholder="Any special requests or notes..."
-                  value={form.message}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* Error */}
-              {status === "error" && (
-                <div style={{ color: "#c0392b", fontSize: "0.85rem", background: "#fdecea", padding: "0.6rem 0.9rem", borderRadius: "6px" }}>
-                  ❌ Failed to send booking. Please try again or email us directly.
+                {/* Hotel Summary */}
+                <div style={hotelSummary} className="booking-modal-summary">
+                  <strong>📍 {hotel.name}</strong><br />
+                  🌍 {hotel.location}<br />
+                  💰 <strong style={{ color: "#008009" }}>₹{hotel.price} / night</strong>
+                  &nbsp;&nbsp;⭐ {hotel.rating}/5 stars
                 </div>
-              )}
 
-              {/* Submit */}
-              <button type="submit" style={submitBtn(status === "loading")} disabled={status === "loading"}>
-                {status === "loading" ? "Sending Booking..." : "Confirm Booking →"}
-              </button>
+                {/* Guest Info */}
+                <div>
+                  <label style={labelStyle} className="booking-modal-label">Full Name *</label>
+                  <input
+                    style={inputStyle}
+                    className="booking-modal-input"
+                    type="text"
+                    name="user_name"
+                    placeholder="John Doe"
+                    value={form.user_name}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-            </form>
-          )}
+                <div style={rowStyle} className="booking-modal-row">
+                  <div>
+                    <label style={labelStyle} className="booking-modal-label">Email *</label>
+                    <input
+                      style={inputStyle}
+                      className="booking-modal-input"
+                      type="email"
+                      name="user_email"
+                      placeholder="you@email.com"
+                      value={form.user_email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle} className="booking-modal-label">Phone</label>
+                    <input
+                      style={inputStyle}
+                      className="booking-modal-input"
+                      type="tel"
+                      name="user_phone"
+                      placeholder="+1 234 567 890"
+                      value={form.user_phone}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+
+                {/* Dates */}
+                <div style={rowStyle} className="booking-modal-row">
+                  <div>
+                    <label style={labelStyle} className="booking-modal-label">Check-in *</label>
+                    <input
+                      style={inputStyle}
+                      className="booking-modal-input"
+                      type="date"
+                      name="check_in"
+                      value={form.check_in}
+                      onChange={handleChange}
+                      min={getTodayDate()}
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label style={labelStyle} className="booking-modal-label">Check-out *</label>
+                    <input
+                      style={inputStyle}
+                      className="booking-modal-input"
+                      type="date"
+                      name="check_out"
+                      value={form.check_out}
+                      onChange={handleChange}
+                      min={getTodayDate()}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* Guests */}
+                <div>
+                  <label style={labelStyle} className="booking-modal-label">Number of Guests</label>
+                  <select
+                    style={inputStyle}
+                    className="booking-modal-input"
+                    name="guests"
+                    value={form.guests}
+                    onChange={handleChange}
+                  >
+                    {[1, 2, 3, 4, 5, 6].map((n) => (
+                      <option key={n} value={n}>{n} Guest{n > 1 ? "s" : ""}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label style={labelStyle} className="booking-modal-label">Special Requests</label>
+                  <textarea
+                    style={{ ...inputStyle, resize: "vertical", minHeight: "70px" }}
+                    className="booking-modal-input"
+                    name="message"
+                    placeholder="Any special requests or notes..."
+                    value={form.message}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                {/* Error */}
+                {status === "error" && (
+                  <div style={{ color: "#c0392b", fontSize: "0.85rem", background: "#fdecea", padding: "0.6rem 0.9rem", borderRadius: "6px" }}>
+                    ❌ Failed to send booking. Please try again or email us directly.
+                  </div>
+                )}
+
+                {/* Submit */}
+                <button type="submit" style={submitBtn(status === "loading")} disabled={status === "loading"}>
+                  {status === "loading" ? "Sending Booking..." : "Confirm Booking →"}
+                </button>
+
+              </form>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

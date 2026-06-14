@@ -50,6 +50,43 @@ const styles = {
   }),
 };
 
+const mediaQueryStyle = `
+  @media (max-width: 768px) {
+    .image-slider {
+      height: 180px !important;
+    }
+    .slider-image {
+      height: 180px !important;
+    }
+    .slider-btn {
+      width: 28px !important;
+      height: 28px !important;
+      font-size: 1rem !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .image-slider {
+      height: 150px !important;
+    }
+    .slider-image {
+      height: 150px !important;
+    }
+    .slider-btn {
+      width: 24px !important;
+      height: 24px !important;
+      font-size: 0.9rem !important;
+    }
+    .slider-dots {
+      gap: 3px !important;
+    }
+    .slider-dot {
+      width: 6px !important;
+      height: 6px !important;
+    }
+  }
+`;
+
 export default function ImageSlider({ images, hotelName }) {
   const [current, setCurrent] = useState(0);
 
@@ -71,28 +108,32 @@ export default function ImageSlider({ images, hotelName }) {
   };
 
   return (
-    <div style={styles.slider}>
-      <img
-        src={images[current]}
-        alt={`${hotelName} - ${current + 1}`}
-        style={styles.image}
-      />
+    <>
+      <style>{mediaQueryStyle}</style>
+      <div style={styles.slider} className="image-slider">
+        <img
+          src={images[current]}
+          alt={`${hotelName} - ${current + 1}`}
+          style={styles.image}
+          className="slider-image"
+        />
 
-      <button style={{ ...styles.btn, left: "10px" }} onClick={prev}>‹</button>
-      <button style={{ ...styles.btn, right: "10px" }} onClick={next}>›</button>
+        <button style={{ ...styles.btn, left: "10px" }} className="slider-btn" onClick={prev}>‹</button>
+        <button style={{ ...styles.btn, right: "10px" }} className="slider-btn" onClick={next}>›</button>
 
-      <div style={styles.dots}>
-        {images.map((_, i) => (
-          <button
-            key={i}
-            style={styles.dot(i === current)}
-            onClick={(e) => {
-              e.stopPropagation();
-              setCurrent(i);
-            }}
-          />
-        ))}
+        <div style={styles.dots} className="slider-dots">
+          {images.map((_, i) => (
+            <button
+              key={i}
+              style={{...styles.dot(i === current), className: "slider-dot"}}
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrent(i);
+              }}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
