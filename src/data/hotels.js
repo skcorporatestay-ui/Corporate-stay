@@ -1,16 +1,33 @@
 const hotels = [
   {
     id: 1,
-    name: "Ocean View Resort",
+    name: "SRS Springs Hotel and Spa",
     price: 2499,
+    active: true,
     rating: 4,
-    location: "Miami, Florida",
+    location: "Bangalore, Karnataka",
     description:
       "Enjoy luxury and tranquility by the sea with breathtaking ocean views, private beach access, and world-class dining.",
     images: [
-      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80",
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80",
-      "https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.11 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.11 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.12 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.12 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.13 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.13 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.15 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.16 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.16 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.17 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.19 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.21 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.22 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.22 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.23 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.23 PM (2).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.23 PM.jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.24 PM (1).jpeg",
+      "/images/hotel-1/WhatsApp Image 2026-09-04 at 7.51.24 PM.jpeg",
     ],
     amenities: ["Pool", "Spa", "Free WiFi", "Beach Access"],
   },
@@ -18,6 +35,7 @@ const hotels = [
     id: 2,
     name: "Mountain Escape Lodge",
     price: 2999,
+    active: false,
     rating: 5,
     location: "Aspen, Colorado",
     description:
@@ -33,6 +51,7 @@ const hotels = [
     id: 3,
     name: "Urban Boutique Hotel",
     price: 3499,
+    active: false,
     rating: 4,
     location: "New York City, NY",
     description:
@@ -48,6 +67,7 @@ const hotels = [
     id: 4,
     name: "Tropical Paradise Inn",
     price: 3499,
+    active: false,
     rating: 5,
     location: "Bali, Indonesia",
     description:
@@ -63,6 +83,7 @@ const hotels = [
     id: 5,
     name: "Desert Dunes Hotel",
     price: 4999,
+    active: false,
     rating: 3,
     location: "Dubai, UAE",
     description:
@@ -78,6 +99,7 @@ const hotels = [
     id: 6,
     name: "Lakeside Serenity Hotel",
     price: 4999,
+    active: false,
     rating: 4,
     location: "Geneva, Switzerland",
     description:

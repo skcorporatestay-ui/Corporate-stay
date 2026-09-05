@@ -71,16 +71,19 @@ function StarRating({ rating }) {
 export default function HotelCard({ hotel }) {
   const [hovered, setHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const cardStyle = {
+    ...styles.card,
+    transform: hovered && hotel.active ? "translateY(-6px)" : "translateY(0)",
+    boxShadow: hovered && hotel.active ? "0 12px 30px rgba(0,53,128,0.18)" : "0 4px 16px rgba(0,0,0,0.09)",
+    cursor: hotel.active ? "pointer" : "default",
+    opacity: hotel.active ? 1 : 0.62,
+  };
 
   return (
     <>
       <style>{mediaQueryStyle}</style>
       <div
-        style={{
-          ...styles.card,
-          transform: hovered ? "translateY(-6px)" : "translateY(0)",
-          boxShadow: hovered ? "0 12px 30px rgba(0,53,128,0.18)" : "0 4px 16px rgba(0,0,0,0.09)",
-        }}
+        style={cardStyle}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -104,8 +107,13 @@ export default function HotelCard({ hotel }) {
               <span key={a} style={{...styles.amenityTag, className: "hotel-card-amenity-tag"}}>{a}</span>
             ))}
           </div>
-          <button style={styles.bookBtn} onClick={() => setShowModal(true)}>
-            Book Now →
+          <button
+            style={hotel.active ? styles.bookBtn : { ...styles.bookBtn, background: "#c7c7c7", cursor: "not-allowed", color: "#666" }}
+            onClick={() => hotel.active && setShowModal(true)}
+            disabled={!hotel.active}
+            aria-disabled={!hotel.active}
+          >
+            {hotel.active ? "Book Now →" : "Unavailable"}
           </button>
         </div>
       </div>

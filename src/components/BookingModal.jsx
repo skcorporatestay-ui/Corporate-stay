@@ -158,7 +158,17 @@ export default function BookingModal({ hotel, onClose }) {
   };
 
   const handleChange = (e) => {
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setForm((prev) => {
+      const next = { ...prev, [name]: value };
+      // If check-in changes and check-out is before new check-in, move check-out to check-in
+      if (name === "check_in") {
+        if (prev.check_out && prev.check_out < value) {
+          next.check_out = value;
+        }
+      }
+      return next;
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -313,7 +323,7 @@ export default function BookingModal({ hotel, onClose }) {
                       name="check_out"
                       value={form.check_out}
                       onChange={handleChange}
-                      min={getTodayDate()}
+                      min={form.check_in || getTodayDate()}
                       required
                     />
                   </div>

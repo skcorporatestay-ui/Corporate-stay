@@ -112,7 +112,7 @@ export default function ImageSlider({ images, hotelName }) {
       <style>{mediaQueryStyle}</style>
       <div style={styles.slider} className="image-slider">
         <img
-          src={images[current]}
+          src={encodeURI(images[current])}
           alt={`${hotelName} - ${current + 1}`}
           style={styles.image}
           className="slider-image"
